@@ -1,23 +1,22 @@
-import logo from './logo.svg';
-import './App.css';
-
+import { useState } from "react";
+import "./App.css";
+import Header from "./components/header/Header";
+import InvestmentForm from "./components/investmentform/InvestmentForm";
+import ResultTable from "./components/resulttable/ResultTable";
 function App() {
+  const [rows, setRows] = useState([]);
+
+  function onFormSubmitListener(rows) {
+    console.log("form submitted");
+    setRows(rows);
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="card">
+      <Header />
+      <InvestmentForm onSubmit={onFormSubmitListener} />
+      {rows.length === 0 && <p>Enter required data</p>}
+      {rows.length > 0 && <ResultTable rows={rows} />}
     </div>
   );
 }
